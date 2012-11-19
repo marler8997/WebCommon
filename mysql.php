@@ -40,6 +40,7 @@ function MysqlInit() {
   }
 }
 
+
 // call  : MysqlExec('query...');
 // throws: MysqlException
 function MysqlExec($query) {
@@ -49,6 +50,28 @@ function MysqlExec($query) {
     throw new MysqlException($logRefNum);
   }
 }
+
+// Use when inserting a row with an auto_increment column
+// call  : $id = MysqlInsertID('query...');
+// throws: MysqlException
+function MysqlInsertID($query) {
+  $result = mysql_query($query);
+  if($result === FALSE) {
+    $logRefNum = code_error_with_ref(__FILE__,__LINE__,"mysql_query('$query') failed: ".mysql_error());
+    throw new MysqlException($logRefNum);
+  }
+  $id = mysql_insert_id();
+  if($id === FALSE) {
+    $logRefNum = code_error_with_ref(__FILE__,__LINE__,"mysql_insert_id('$query') failed: ".mysql_error());
+    throw new MysqlException($logRefNum);
+  }
+  if($id === 0) {
+    $logRefNum = code_error_with_ref(__FILE__,__LINE__,"mysql_insert_id('$query') returned 0 (nothing was inserted)");
+    throw new MysqlException($logRefNum);
+  }
+  return $id;
+}
+
 
 // call  : list($result,$count) = MysqlRows('query...');
 // throws: MysqlException

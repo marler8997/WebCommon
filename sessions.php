@@ -81,8 +81,9 @@ function MysqlNewCookieSession($uid) {
 
     list($ip,$port,$ipString) = ClientEndPoint();
     $sidHex = GenerateSid($ipString,$port);
+    $sid = pack('H*', $sidHex);
 
-    MysqlExec("INSERT INTO Sessions VALUES(x'$sid',$uid,$ip,$port,NOW(),NOW(),0);");
+    MysqlExec("INSERT INTO Sessions VALUES(x'$sidHex',$uid,$ip,$port,NOW(),NOW(),0);");
 
   } else {
     list($sid,$genTime) = $result;
@@ -91,7 +92,7 @@ function MysqlNewCookieSession($uid) {
     // TODO: i can also check if the current ip is the same as the genip
     MysqlExec("UPDATE Sessions SET LastRequest=NOW(),RequestCount=RequestCount+1 WHERE Uid=$uid;");
   }
-  setcookie("Sid",$sid);
+  setcookie("Sid",base64_encode($sid));
 }
 
 // call: $uid = MysqlCookieSession();

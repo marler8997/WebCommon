@@ -12,7 +12,7 @@ function ValidUserName($userName)
 }
 function ValidPersonName($personName)
 {
-  return eregi("^[A-Z][-a-zA-Z]+$", $personName);
+  return eregi("^[-a-zA-Z]+$", $personName);
 }
 function ValidSqlColumn($column)
 {

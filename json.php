@@ -1,6 +1,9 @@
 <?php
+/* 
+Use these classes when you'd like to dynamicaly generate json.
+Every time an object is added it is directly written to the output buffer.
 
-/* Usage
+Usage:
 $json = new JsonObject();
 
 $json->addString('uid','2');
@@ -13,6 +16,8 @@ $json->addNull();
 $json = $json->end();
 
 $json->endAll();
+$json->ex(); // exit
+$json->ex("error message"); // exit with an error message
 */
 
 class JsonObject {
@@ -89,7 +94,6 @@ class JsonObject {
     exit();
   }
 }
-
 class JsonArray {
   public $parent;
   private $first;
@@ -162,5 +166,4 @@ class JsonArray {
     exit();
   }
 }
-
 ?>

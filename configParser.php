@@ -1,6 +1,5 @@
 <?php
 
-
 // returns string (error message) on error,
 // otherwise returns an array
 function parseConfigFile($filename)
@@ -22,7 +21,7 @@ function parseConfigFile($filename)
 
     if($line[0] == '#' || $line[0] == ';') continue;
 
-    if(preg_match('/^(\S*)\s*(.*)$/', $line, $matches)) {
+    if(preg_match('/^\s*(\S*)\s*(.*)$/', $line, $matches)) {
       $config[$matches[1]] = $matches[2];
     } else {
       fclose($fp);
@@ -31,12 +30,7 @@ function parseConfigFile($filename)
   }
 }
 
-
-
-
 //$config = parseConfigFile('test/testConfigFile1');
 //print_r($config);
-
-
 
 ?>

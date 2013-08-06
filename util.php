@@ -1,4 +1,24 @@
 <?php
+
+function Get($assocArray, $key)
+{
+  return isset($assocArray[$key]) ? $assocArray[$key] : NULL;
+}
+
+function MissingRequestVars()
+{
+  $args = func_num_args();
+  for($i = 0; $i < $args; $i++) {
+    $arg = func_get_arg($i);
+    if(!isset($_REQUEST[$arg])) return "Missing request variable '$arg'";
+  }
+  return null;
+}
+
+function ValidUnsigned($unsigned)
+{
+  return eregi("^[0-9]+$", $unsigned);
+}
 function ValidEmail($email)
 {
   return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*$", $email);
@@ -6,7 +26,7 @@ function ValidEmail($email)
 function SplitEmails($emails) {
   return preg_split('/[\\s,;:]+/', $emails, -1, PREG_SPLIT_NO_EMPTY);
 }
-function ValidUserName($userName)
+function ValidUsername($userName)
 {
   return eregi("^[a-zA-Z0-9]+$", $userName);
 }
@@ -27,6 +47,14 @@ function ValidScriptName($scriptName)
   return eregi('^[a-zA-Z][-a-zA-Z0-9_ ]*$', $scriptName);
 }
 
+function PhoneDigits($phone)
+{
+  return ereg_replace('[^0-9]','',$phone);
+}
+function FormatPhone($phone)
+{
+  return '('.substr($phone, 0, 3).')'.substr($phone,3,3).'-'.substr($phone,6);
+}
 
 
 $clientIPString;

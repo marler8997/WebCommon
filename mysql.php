@@ -137,7 +137,6 @@ function MysqlValue($query) {
   return $result[0];
 }
 
-
 function MysqlArrayToWhere($conditions) {
   $count = count($conditions);
   if($count <= 0) {return '';}
